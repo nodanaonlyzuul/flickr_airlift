@@ -1,0 +1,28 @@
+h2. Flickr Airlift
+
+Flickr Airlift is a command line tool written in Ruby to scrape all of a user's photos.
+It comes with the bin flickr_airlift which will dump all photos in a directory
+named after the user.
+
+h3. Requirements
+
+# flickr gem (https://github.com/ctagg/flickr)
+# A Flickr API Key and shared secret (if you want to access private photos)
+
+h3. Usage
+
+Accessing your own photos:
+@> flickr_airlift an_api_key a_shared_secret "Your Screen Name"@
+
+Accessing anyone else's photos:
+@> flickr_airlift "Someone else's screen name"@
+
+h3. TODOs:
+
+# fork flickr gem or use another gem unless ctagg gets back to you
+# download private files
+# update usage if you can get it
+# Gemify
+# download at original size
+
+This product uses the Flickr API but is not endorsed or certified by Flickr.
