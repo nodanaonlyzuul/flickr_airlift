@@ -19,7 +19,7 @@ Accessing anyone else's photos:
 
 h3. TODOs:
 
-# fork flickr gem or use another gem unless ctagg gets back to you
+# fork flickr gem or use another gem unless ctagg gets back to you (https://github.com/hanklords/flickraw)
 # download private files
 # update usage if you can get it
 # Gemify
