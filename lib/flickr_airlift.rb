@@ -45,7 +45,7 @@ module FlickrAirlift
         flickr.photos.search(:user_id => user_id, :page => page_number).each_with_index do |photo, i|
           photo_id     = photo.id
           info         = flickr.photos.getInfo(:photo_id => photo_id)
-          download_url = FlickRaw.url_o(info)
+          download_url = flickr.photos.getSizes(:photo_id => photo_id).find{|size| size.label == "Original" || size.label == "Large" || size.label == "Medium"}.source
 
           puts "** Downloading #{i+1}: #{photo.title} from #{download_url}"
           File.open(File.join(scraped_user, "#{photo_id}.jpg"), 'w') do |file|
