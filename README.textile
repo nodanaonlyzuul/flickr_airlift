@@ -12,6 +12,7 @@ h3. Requirements
 h3. Usage
 
 Relax slim...use the @flickr_airlift@ bin and let the app have its way
+Here's an "example session":https://gist.github.com/0cd071320f022c06dc23
 
 h3. TODOs:
 # update usage with complete walkthrough
