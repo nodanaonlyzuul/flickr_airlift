@@ -6,7 +6,8 @@ named after the user.
 
 h3. Requirements
 
-# Flickraw gem
+# flickraw gem
+# A Flickr account
 # A good internet connection and patience
 
 h3. Usage
