@@ -6,23 +6,15 @@ named after the user.
 
 h3. Requirements
 
-# flickr gem (https://github.com/ctagg/flickr)
-# A Flickr API Key and shared secret (if you want to access private photos)
+# Flickraw gem
+# A good internet connection and patience
 
 h3. Usage
 
-Accessing your own photos:
-@> flickr_airlift an_api_key a_shared_secret "Your Screen Name"@
-
-Accessing anyone else's photos:
-@> flickr_airlift "Someone else's screen name"@
+Relax slim...use the @flickr_airlift@ bin and let the app have its way
 
 h3. TODOs:
-
-# fork flickr gem or use another gem unless ctagg gets back to you (https://github.com/hanklords/flickraw)
-# download private files
-# update usage if you can get it
-# Gemify
-# download at original size
+# update usage with complete walkthrough
+# vendorize Flickraw
 
 This product uses the Flickr API but is not endorsed or certified by Flickr.
