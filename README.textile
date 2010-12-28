@@ -17,8 +17,6 @@ Here's an "example session":https://gist.github.com/0cd071320f022c06dc23
 
 h3. TODOs:
 
-# update usage with complete walkthrough
-# private photos
-# vendorize Flickraw
+# vendorize Flickraw and make it completly standalone
 
 This product uses the Flickr API but is not endorsed or certified by Flickr.
