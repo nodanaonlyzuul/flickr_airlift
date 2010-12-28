@@ -14,9 +14,19 @@ module FlickrAirlift
 
       # TODO: Use open if it's supported
       puts " "
-      puts "Open this url in your process to complete the authication process:"
-      puts auth_url
-      puts "Press Enter when you are finished."
+      if system("which open")
+        puts "Opening your browser..."
+        sleep 1
+        puts "follow its directions..."
+        sleep 1
+        puts "Come back and press Enter when you are finished."
+        sleep 2
+        `open #{auth_url}`
+      else
+        puts "Open this url in your process to complete the authication process:"
+        puts auth_url
+        puts "Press Enter when you are finished."
+      end
       STDIN.getc
 
       # Authentication
