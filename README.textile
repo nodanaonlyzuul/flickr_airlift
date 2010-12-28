@@ -17,6 +17,7 @@ Here's an "example session":https://gist.github.com/0cd071320f022c06dc23
 
 h3. TODOs:
 
-# vendorize Flickraw and make it completly standalone
+# vendorize dependencies to make flickr_airlift totally self-sufficient.
+# Look into launchy (http://copiousfreetime.rubyforge.org/launchy/)
 
 This product uses the Flickr API but is not endorsed or certified by Flickr.
