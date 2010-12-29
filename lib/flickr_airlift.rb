@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'flickraw'
 require 'net/http'
 require 'cgi'
