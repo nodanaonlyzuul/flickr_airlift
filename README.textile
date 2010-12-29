@@ -4,6 +4,10 @@ Flickr Airlift is a command line tool written in Ruby to scrape all of a user's 
 It comes with the bin flickr_airlift which will dump all photos in a directory
 named after the user.
 
+h3. Install
+
+sudo gem install flickr_airlift
+
 h3. Requirements
 
 # flickraw gem
