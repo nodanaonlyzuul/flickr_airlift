@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'flickr_airlift'
+FlickrAirlift.upload(ARGV.first)

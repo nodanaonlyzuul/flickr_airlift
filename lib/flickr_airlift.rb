@@ -44,11 +44,24 @@ module FlickrAirlift
       end
   end
 
-  def self.establish_session
+  def self.upload(relative_url)
+    establish_session("write")
+    image_file_names = Dir.entries(".").find_all{ |file_name| file_name.include?(".jpg") || file_name.include?(".jpeg") || file_name.include?(".gif") || file_name.include?(".png") }
+
+    puts "Uploading #{image_file_names.length} files:"
+    sleep 1
+    image_file_names.each_with_index do |file_name, index|
+      puts "  Uploading (#{index+1} of #{image_file_names.length}): #{file_name}"
+      flickr.upload_photo File.join(relative_url, file_name), :title => file_name.split(".").first
+    end
+    # TODO: Go to page
+  end
+
+  def self.establish_session(permission = "read")
     FlickRaw.api_key        = "d4d152785af1b0ea68a5a2d173c75707"
     FlickRaw.shared_secret  = "b9da0b4f99507dd0"
     frob                    = flickr.auth.getFrob
-    auth_url                = FlickRaw.auth_url :frob => frob, :perms => 'read'
+    auth_url                = FlickRaw.auth_url :frob => frob, :perms => permission
 
     puts " "
     if system("which open")

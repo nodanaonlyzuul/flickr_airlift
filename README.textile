@@ -1,8 +1,4 @@
-h2. Flickr Airlift
-
-Flickr Airlift is a command line tool written in Ruby to scrape all of a user's photos.
-It comes with the bin flickr_airlift which will dump all photos in a directory
-named after the user.
+h1. flicker_airlift & flicker_uplift
 
 h3. Install
 
@@ -14,12 +10,30 @@ h3. Requirements
 # A Flickr account
 # A good internet connection and patience
 
-h3. Usage
+h1. Flickr Airlift
+
+Flickr Airlift is a command line tool to scrape all of a user's photos.
+It comes with the bin flickr_airlift which will dump all photos in a directory
+named after the user.
+
+h2. Usage
 
 Relax slim...use the @flickr_airlift@ bin and let the app have its way
 Here's an "example session":https://gist.github.com/0cd071320f022c06dc23
 
-h3. TODOs:
+------------------------------------------------------------------------------------
+
+h1. Flickr Uplift
+
+Flickr Uplift is a command line tool to bulk upload all photos in a given directory.
+By default they will all be public.
+
+h2. Usage
+
+Relax slim...use the @flickr_uplift@ bin and let the app have its way
+Here's an "example session":https://gist.github.com/61c9b299fdbae112dc26
+
+h2. TODOs:
 
 # vendorize dependencies to make flickr_airlift totally self-sufficient.
 # Look into launchy (http://copiousfreetime.rubyforge.org/launchy/)
