@@ -6,30 +6,7 @@ module FlickrAirlift
 
   def self.download
     begin
-      # Setup
-      FlickRaw.api_key        = "d4d152785af1b0ea68a5a2d173c75707"
-      FlickRaw.shared_secret  = "b9da0b4f99507dd0"
-      frob                    = flickr.auth.getFrob
-      auth_url                = FlickRaw.auth_url :frob => frob, :perms => 'read'
-
-      puts " "
-      if system("which open")
-        puts "opening your browser..."
-        sleep 1
-        puts "Come back and press Enter when you are finished"
-        sleep 2
-        system("open '#{auth_url}'")
-      else
-        puts "Open this url in your process to complete the authication process:"
-        puts auth_url
-        puts "Press Enter when you are finished."
-      end
-      STDIN.getc
-
-      # Authentication
-      auth  = flickr.auth.getToken :frob => frob
-      login = flickr.test.login
-      puts "You are now authenticated as #{login.username} with token #{auth.token}"
+      establish_session
 
       # Prompt
       puts "Exactly who's photos would you like to archive?:"
@@ -65,6 +42,32 @@ module FlickrAirlift
       rescue FlickRaw::FailedResponse => e
         puts e.msg
       end
+  end
+
+  def self.establish_session
+    FlickRaw.api_key        = "d4d152785af1b0ea68a5a2d173c75707"
+    FlickRaw.shared_secret  = "b9da0b4f99507dd0"
+    frob                    = flickr.auth.getFrob
+    auth_url                = FlickRaw.auth_url :frob => frob, :perms => 'read'
+
+    puts " "
+    if system("which open")
+      puts "opening your browser..."
+      sleep 1
+      puts "Come back and press Enter when you are finished"
+      sleep 2
+      system("open '#{auth_url}'")
+    else
+      puts "Open this url in your process to complete the authication process:"
+      puts auth_url
+      puts "Press Enter when you are finished."
+    end
+    STDIN.getc
+
+    # Authentication
+    auth  = flickr.auth.getToken :frob => frob
+    login = flickr.test.login
+    puts "You are now authenticated as #{login.username} with token #{auth.token}"
   end
 
 end
