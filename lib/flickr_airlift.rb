@@ -47,14 +47,17 @@ module FlickrAirlift
   def self.upload(relative_url)
     establish_session("write")
     image_file_names = Dir.entries(".").find_all{ |file_name| file_name.include?(".jpg") || file_name.include?(".jpeg") || file_name.include?(".gif") || file_name.include?(".png") }
-
+    uploaded_ids = []
     puts "Uploading #{image_file_names.length} files:"
     sleep 1
     image_file_names.each_with_index do |file_name, index|
       puts "  Uploading (#{index+1} of #{image_file_names.length}): #{file_name}"
-      flickr.upload_photo File.join(relative_url, file_name), :title => file_name.split(".").first
+      uploaded_ids << flickr.upload_photo(File.join(relative_url, file_name), :title => file_name.split(".").first)
     end
-    # TODO: Go to page
+    puts "...DONE!"
+    edit_url = "http://www.flickr.com/photos/upload/edit/?ids=#{uploaded_ids.join(',')}"
+
+    system("which open") ? system("open '#{edit_url}'") : puts(" Go to #{edit_url} to edit your photos more")
   end
 
   def self.establish_session(permission = "read")
