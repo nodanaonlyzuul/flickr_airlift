@@ -3,7 +3,9 @@ require 'net/http'
 require 'cgi'
 
 module FlickrAirlift
-
+  
+  UPLOADABLE_FORMATS = [".jpg", ".jpeg", ".gif", ".png", ".mov", ".avi"]
+  
   def self.download
     begin
       establish_session
@@ -46,7 +48,8 @@ module FlickrAirlift
 
   def self.upload(relative_url)
     establish_session("write")
-    image_file_names = Dir.entries(".").find_all{ |file_name| file_name.include?(".jpg") || file_name.include?(".jpeg") || file_name.include?(".gif") || file_name.include?(".png") }
+    
+    image_file_names = Dir.entries(".").find_all{ |file_name|  UPLOADABLE_FORMATS.any?{ |extension| file_name.downcase.include?(extension)} }
     uploaded_ids = []
     puts "Uploading #{image_file_names.length} files:"
     sleep 1

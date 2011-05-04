@@ -1,7 +1,7 @@
 $spec = Gem::Specification.new do |s|
   s.name = "flickr_airlift"
-  s.version = '0.0.6'
-  s.summary = "A Command-Line tool for scraping any user's original photos"
+  s.version = '0.0.7'
+  s.summary = "A Command-Line tool for scraping any user's original photos, or uploading all media in a given directory"
 
   s.authors  = ['Stephen Schor']
   s.email    = ['beholdthepanda@gmail.com']
