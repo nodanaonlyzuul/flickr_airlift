@@ -47,10 +47,10 @@ module FlickrAirlift
       end
   end
 
-  def self.upload(relative_url)
+  def self.upload(relative_url = ".")
     establish_session("write")
 
-    image_file_names = Dir.entries(".").find_all{ |file_name|  UPLOADABLE_FORMATS.any?{ |extension| file_name.downcase.include?(extension)} }
+    image_file_names = Dir.entries(relative_url).find_all{ |file_name|  UPLOADABLE_FORMATS.any?{ |extension| file_name.downcase.include?(extension)} }
     uploaded_ids = []
 
     puts "Uploading #{image_file_names.length} files:"
