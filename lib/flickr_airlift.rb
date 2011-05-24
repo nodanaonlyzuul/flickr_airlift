@@ -1,11 +1,12 @@
 require 'flickraw'
 require 'net/http'
 require 'cgi'
+require 'launchy'
 
 module FlickrAirlift
-  
+
   UPLOADABLE_FORMATS = [".jpg", ".jpeg", ".gif", ".png", ".mov", ".avi"]
-  
+
   def self.download
     begin
       establish_session
@@ -48,19 +49,22 @@ module FlickrAirlift
 
   def self.upload(relative_url)
     establish_session("write")
-    
+
     image_file_names = Dir.entries(".").find_all{ |file_name|  UPLOADABLE_FORMATS.any?{ |extension| file_name.downcase.include?(extension)} }
     uploaded_ids = []
+
     puts "Uploading #{image_file_names.length} files:"
     sleep 1
+
     image_file_names.each_with_index do |file_name, index|
       puts "  Uploading (#{index+1} of #{image_file_names.length}): #{file_name}"
       uploaded_ids << flickr.upload_photo(File.join(relative_url, file_name), :title => file_name.split(".").first)
     end
+
     puts "...DONE!"
     edit_url = "http://www.flickr.com/photos/upload/edit/?ids=#{uploaded_ids.join(',')}"
 
-    system("which open") ? system("open '#{edit_url}'") : puts(" Go to #{edit_url} to edit your photos more")
+    Launchy.open(edit_url)
   end
 
   def self.establish_session(permission = "read")
@@ -75,7 +79,7 @@ module FlickrAirlift
       sleep 1
       puts "Come back and press Enter when you are finished"
       sleep 2
-      system("open '#{auth_url}'")
+      Launchy.open(auth_url)
     else
       puts "Open this url in your process to complete the authication process:"
       puts auth_url
