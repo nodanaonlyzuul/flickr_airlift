@@ -6,7 +6,7 @@ sudo gem install flickr_airlift
 
 h3. Requirements
 
-# flickraw gem
+# 'flickraw' and 'launchy' gems
 # A Flickr account
 # A good internet connection and patience
 
@@ -32,10 +32,5 @@ h2. Usage
 
 Relax slim...use the @flickr_uplift@ bin and let the app have its way
 Here's an "example session":https://gist.github.com/61c9b299fdbae112dc26
-
-h2. TODOs:
-
-# vendorize dependencies to make flickr_airlift totally self-sufficient.
-# Look into launchy (http://copiousfreetime.rubyforge.org/launchy/)
 
 This product uses the Flickr API but is not endorsed or certified by Flickr.
