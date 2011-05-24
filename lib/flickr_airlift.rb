@@ -74,17 +74,12 @@ module FlickrAirlift
     auth_url                = FlickRaw.auth_url :frob => frob, :perms => permission
 
     puts " "
-    if system("which open")
-      puts "opening your browser..."
-      sleep 1
-      puts "Come back and press Enter when you are finished"
-      sleep 2
-      Launchy.open(auth_url)
-    else
-      puts "Open this url in your process to complete the authication process:"
-      puts auth_url
-      puts "Press Enter when you are finished."
-    end
+    puts "opening your browser..."
+    sleep 1
+    puts "Come back and press Enter when you are finished"
+    sleep 2
+    Launchy.open(auth_url)
+
     STDIN.getc
 
     # Authentication
