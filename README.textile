@@ -34,3 +34,7 @@ Relax slim...use the @flickr_uplift@ bin and let the app have its way
 Here's an "example session":https://gist.github.com/61c9b299fdbae112dc26
 
 This product uses the Flickr API but is not endorsed or certified by Flickr.
+
+h1. Stored Authentication.
+
+Once flickr_airlift authenticates you - it stores your authentication in ~/.flick_airliftrc
