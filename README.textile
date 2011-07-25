@@ -1,4 +1,4 @@
-h1. flicker_airlift & flicker_uplift
+h1. flickr_airlift & flickr_uplift
 
 h3. Install
 
