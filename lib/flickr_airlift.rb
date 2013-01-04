@@ -32,9 +32,12 @@ module FlickrAirlift
       (1..page_count.to_i).each do |page_number|
         puts "* PAGE #{page_number} of #{page_count}"
         flickr.photos.search(:user_id => user_id, :page => page_number).each_with_index do |photo, i|
-          photo_id     = photo.id
-          info         = flickr.photos.getInfo(:photo_id => photo_id)
-          download_url = flickr.photos.getSizes(:photo_id => photo_id).find{|size| size.label == "Original" || size.label == "Large" || size.label == "Medium"}.source
+
+          photo_id           = photo.id
+          info               = flickr.photos.getInfo(:photo_id => photo_id)
+          photo_size_objects = flickr.photos.getSizes(:photo_id => photo_id)
+
+          download_url = flickr.photos.getSizes(:photo_id => photo_id).find{|size| size.label == "Original"}.source
 
           puts "** Downloading #{i+1}: #{photo.title} from #{download_url}"
           File.open(File.join(scraped_user, "#{info.title}#{File.extname(download_url)}"), 'wb') do |file|
