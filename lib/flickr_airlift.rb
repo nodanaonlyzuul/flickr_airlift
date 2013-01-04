@@ -3,6 +3,7 @@ require 'flickraw'
 require 'net/http'
 require 'cgi'
 require 'launchy'
+require 'yaml'
 
 module FlickrAirlift
 
@@ -74,7 +75,7 @@ module FlickrAirlift
     FlickRaw.shared_secret  = "405549bcec106815"
 
     if File.exists?(auth_file)
-      puts "authenticating thought #{auth_file}"
+      puts "authenticating through #{auth_file}...if this fails - delete this file"
       data = YAML.load_file(auth_file)
       auth = flickr.auth.checkToken :auth_token => data["api_token"]
     else
@@ -95,8 +96,6 @@ module FlickrAirlift
       login = flickr.test.login
 
       puts auth.token
-
-      require 'yaml'
       data = {}
       data["api_token"] = auth.token
       File.open(auth_file, "w"){|f| YAML.dump(data, f) }
