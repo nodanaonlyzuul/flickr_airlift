@@ -1,18 +1,24 @@
-$spec = Gem::Specification.new do |s|
-  s.name        = "flickr_airlift"
-  s.description = "A Command-Line tool for scraping any user's original photos OR uploading all photos from a given directory"
-  s.version     = '0.2.1'
-  s.summary     = "A Command-Line tool for scraping any user's original photos OR uploading all photos from a given directory"
+# -*- encoding: utf-8 -*-
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'flickr_airlift/version'
 
-  s.authors   = ['Stephen Schor']
-  s.email     = ['beholdthepanda@gmail.com']
-  s.homepage  = 'https://github.com/nodanaonlyzuul/flickr_airlift'
+Gem::Specification.new do |gem|
+  gem.name          = "flickr_airlift"
+  gem.version       = FlickrAirlift::VERSION
+  gem.authors       = ["nodanaonlyzuul"]
+  gem.email         = ["beholdthepanda@gmail.com"]
+  gem.description   = "A Command-Line tool for scraping any user's original photos OR uploading all photos from a given directory"
+  gem.summary       = "A Command-Line tool for scraping any user's original photos OR uploading all photos from a given directory"
+  gem.homepage      = "https://github.com/nodanaonlyzuul/flickr_airlift"
 
-  s.executables   =  ['flickr_airlift', 'flickr_uplift']
-  s.files         = Dir['bin/*','lib/**/*']
+  gem.files         = `git ls-files`.split($/)
+  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  gem.require_paths = ["lib"]
 
-  s.add_dependency('launchy',  '0.4.0')
-  s.add_dependency('flickraw', '0.8.4')
+  gem.add_dependency('launchy',  '0.4.0')
+  gem.add_dependency('flickraw', '0.8.4')
 
-  s.rubyforge_project = 'nowarning'
+  gem.rubyforge_project = 'nowarning'
 end

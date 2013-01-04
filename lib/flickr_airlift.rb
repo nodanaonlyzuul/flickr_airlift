@@ -1,3 +1,4 @@
+require "flickr_airlift/version"
 require 'flickraw'
 require 'net/http'
 require 'cgi'
