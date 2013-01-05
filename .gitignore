@@ -1,6 +1,7 @@
 *.gem
 *.rbc
 .bundle
+.redcar
 .config
 .yardoc
 .rvmrc
