@@ -35,15 +35,17 @@ module FlickrAirlift
 
           photo_id           = photo.id
           info               = flickr.photos.getInfo(:photo_id => photo_id)
-          photo_size_objects = flickr.photos.getSizes(:photo_id => photo_id)
-
-          download_url = flickr.photos.getSizes(:photo_id => photo_id).find{|size| size.label == "Original"}.source
-
-          puts "** Downloading #{i+1}: #{photo.title} from #{download_url}"
-          File.open(File.join(scraped_user, "#{info.title}#{File.extname(download_url)}"), 'wb') do |file|
-            file.puts Net::HTTP.get_response(URI.parse(download_url)).body
+          download_url       = flickr.photos.getSizes(:photo_id => photo_id).find{|size| size.label == "Original"}.source
+          file_to_write      = File.join(scraped_user, "#{info.title}#{File.extname(download_url)}")
+          
+          if File.exists?(file_to_write)          
+            puts "** SKIPPING #{file_to_write} because it exists"
+          else
+            puts "** Downloading #{i+1}: #{photo.title} from #{download_url}"
+            File.open(file_to_write, 'wb') do |file|
+              file.puts Net::HTTP.get_response(URI.parse(download_url)).body
+            end
           end
-
         end
       end
 
@@ -78,9 +80,17 @@ module FlickrAirlift
     FlickRaw.shared_secret  = "405549bcec106815"
 
     if File.exists?(auth_file)
-      puts "authenticating through #{auth_file}...if this fails - delete this file"
-      data = YAML.load_file(auth_file)
-      auth = flickr.auth.checkToken :auth_token => data["api_token"]
+      
+      data = YAML.load_file(auth_file)      
+
+      begin
+        auth = flickr.auth.checkToken :auth_token => data["api_token"]  
+      rescue Exception => e
+        puts "These was a problem with the credentials in #{auth_file}"
+        puts "Delete the file and try again."
+        exit
+      end
+      
     else
       frob                    = flickr.auth.getFrob
       auth_url                = FlickRaw.auth_url :frob => frob, :perms => "write"
@@ -98,7 +108,7 @@ module FlickrAirlift
       auth  = flickr.auth.getToken :frob => frob
       login = flickr.test.login
 
-      puts auth.token
+      puts "Writing credentials to #{auth_file}"
       data = {}
       data["api_token"] = auth.token
       File.open(auth_file, "w"){|f| YAML.dump(data, f) }
