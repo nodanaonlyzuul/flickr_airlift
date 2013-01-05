@@ -30,6 +30,9 @@ module FlickrAirlift
       photos        = flickr.photos.search(:user_id => user_id)
       photo_count   = photos.total
       page_count    = photos.pages
+      
+      # non-pro users don't have 'Original' sizes available.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      ranked_sizes  = ['Original', 'Large', 'Medium']
 
       # Downloading
       puts "#{scraped_user} has #{photo_count} pictures"
@@ -40,17 +43,22 @@ module FlickrAirlift
         puts "* PAGE #{page_number} of #{page_count}"
         flickr.photos.search(:user_id => user_id, :page => page_number).each_with_index do |photo, i|
 
-          photo_id           = photo.id
-          info               = flickr.photos.getInfo(:photo_id => photo_id)
-          download_url       = flickr.photos.getSizes(:photo_id => photo_id).find{|size| size.label == "Original"}.source
-          file_to_write      = File.join(scraped_user, "#{info.title}#{File.extname(download_url)}")
+          photo_id            = photo.id
+          info                = flickr.photos.getInfo(:photo_id => photo_id)
+          downloadable_files  = flickr.photos.getSizes(:photo_id => photo_id)
           
-          if File.exists?(file_to_write)          
-            puts "** SKIPPING #{file_to_write} because it exists"
-          else
-            puts "** Downloading #{i+1}: #{photo.title} from #{download_url}"
-            File.open(file_to_write, 'wb') do |file|
-              file.puts Net::HTTP.get_response(URI.parse(download_url)).body
+          ranked_sizes.each do |size_name|
+            if df = downloadable_files.find { |downloadable_file| downloadable_file.label == size_name }
+              download_url        = df.source
+              file_to_write       = File.join(scraped_user, "#{photo_id}#{File.extname(download_url)}")
+              
+              if File.exists?(file_to_write)
+                puts "** SKIPPING #{file_to_write} because it exists"
+              else
+                puts "** Downloading #{i+1}: #{photo.title} (#{size_name}) from #{download_url}"
+                File.open(file_to_write, 'wb') { |file| file.puts Net::HTTP.get_response(URI.parse(download_url)).body }
+              end
+              break
             end
           end
         end
