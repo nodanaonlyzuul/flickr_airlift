@@ -15,11 +15,18 @@ module FlickrAirlift
 
       # Prompt
       puts "Exactly who's photos would you like to archive?:"
+      
       scraped_user = STDIN.gets
-      scraped_user = scraped_user.strip
-
-      # Find
-      user_id       = flickr.people.findByUsername(:username => scraped_user).id
+      scraped_user = scraped_user.strip          
+      
+      begin
+        user_id = flickr.people.findByUsername(:username => scraped_user).id  
+      rescue Exception => e
+        puts "Hmmmm - unknown user - make sure to use the user's full handle - not the one in the URL. (example: 'Fast & Bulbous' not 'fastandbulbous')"
+        self.download
+      end
+      
+      
       photos        = flickr.photos.search(:user_id => user_id)
       photo_count   = photos.total
       page_count    = photos.pages
