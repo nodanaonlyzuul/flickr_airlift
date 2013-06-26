@@ -52,8 +52,8 @@ module FlickrAirlift
               download_url        = df.source
               file_to_write       = File.join(scraped_user, "#{photo_id}#{File.extname(download_url)}")
 
-              if File.exists?(file_to_write)
-                puts "** SKIPPING #{file_to_write} because it exists"
+              if File.exists?(file_to_write) && File.size(file_to_write) > 0
+                puts "** SKIPPING #{file_to_write} because it has already been downloaded"
               else
                 puts "** Downloading #{i+1}: #{photo.title} (#{size_name}) from #{download_url}"
                 File.open(file_to_write, 'wb') { |file| file.puts Net::HTTP.get_response(URI.parse(download_url)).body }
@@ -127,5 +127,9 @@ module FlickrAirlift
       data["api_token"] = auth.token
       File.open(auth_file, "w"){|f| YAML.dump(data, f) }
     end
+  end
+
+  def self.file_path_for_photo(scraped_user, photo_id)
+
   end
 end
