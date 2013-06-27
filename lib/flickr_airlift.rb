@@ -14,7 +14,7 @@ module FlickrAirlift
       establish_session
 
       # Prompt
-      puts "Exactly who's photos would you like to archive?:"
+      puts "Whose photos would you like to archive?:"
 
       scraped_user = STDIN.gets
       scraped_user = scraped_user.strip
