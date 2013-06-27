@@ -129,7 +129,4 @@ module FlickrAirlift
     end
   end
 
-  def self.file_path_for_photo(scraped_user, photo_id)
-
-  end
 end
