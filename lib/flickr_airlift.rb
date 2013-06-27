@@ -15,23 +15,23 @@ module FlickrAirlift
 
       # Prompt
       puts "Exactly who's photos would you like to archive?:"
-      
+
       scraped_user = STDIN.gets
-      scraped_user = scraped_user.strip          
-      
+      scraped_user = scraped_user.strip
+
       begin
-        user_id = flickr.people.findByUsername(:username => scraped_user).id  
+        user_id = flickr.people.findByUsername(:username => scraped_user).id
       rescue Exception => e
         puts "Hmmmm - unknown user - make sure to use the user's full handle - not the one in the URL. (example: 'Fast & Bulbous' not 'fastandbulbous')"
         self.download
       end
-      
-      
+
+
       photos        = flickr.photos.search(:user_id => user_id)
       photo_count   = photos.total
       page_count    = photos.pages
-      
-      # non-pro users don't have 'Original' sizes available.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+      # non-pro users don't have 'Original' sizes available.
       ranked_sizes  = ['Original', 'Large', 'Medium']
 
       # Downloading
@@ -46,14 +46,14 @@ module FlickrAirlift
           photo_id            = photo.id
           info                = flickr.photos.getInfo(:photo_id => photo_id)
           downloadable_files  = flickr.photos.getSizes(:photo_id => photo_id)
-          
+
           ranked_sizes.each do |size_name|
             if df = downloadable_files.find { |downloadable_file| downloadable_file.label == size_name }
               download_url        = df.source
               file_to_write       = File.join(scraped_user, "#{photo_id}#{File.extname(download_url)}")
-              
-              if File.exists?(file_to_write)
-                puts "** SKIPPING #{file_to_write} because it exists"
+
+              if File.exists?(file_to_write) && File.size(file_to_write) > 0
+                puts "** SKIPPING #{file_to_write} because it has already been downloaded"
               else
                 puts "** Downloading #{i+1}: #{photo.title} (#{size_name}) from #{download_url}"
                 File.open(file_to_write, 'wb') { |file| file.puts Net::HTTP.get_response(URI.parse(download_url)).body }
@@ -63,10 +63,9 @@ module FlickrAirlift
           end
         end
       end
-
-      rescue FlickRaw::FailedResponse => e
-        puts e.msg
-      end
+    rescue FlickRaw::FailedResponse => e
+      puts e.msg
+    end
   end
 
   def self.upload(relative_url = ".")
@@ -95,17 +94,17 @@ module FlickrAirlift
     FlickRaw.shared_secret  = "405549bcec106815"
 
     if File.exists?(auth_file)
-      
-      data = YAML.load_file(auth_file)      
+
+      data = YAML.load_file(auth_file)
 
       begin
-        auth = flickr.auth.checkToken :auth_token => data["api_token"]  
+        auth = flickr.auth.checkToken :auth_token => data["api_token"]
       rescue Exception => e
         puts "These was a problem with the credentials in #{auth_file}"
         puts "Delete the file and try again."
         exit
       end
-      
+
     else
       frob                    = flickr.auth.getFrob
       auth_url                = FlickRaw.auth_url :frob => frob, :perms => "write"
@@ -130,4 +129,7 @@ module FlickrAirlift
     end
   end
 
+  def self.file_path_for_photo(scraped_user, photo_id)
+
+  end
 end
