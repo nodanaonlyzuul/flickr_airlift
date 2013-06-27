@@ -106,8 +106,8 @@ module FlickrAirlift
       end
 
     else
-      frob                    = flickr.auth.getFrob
-      auth_url                = FlickRaw.auth_url :frob => frob, :perms => "write"
+      frob     = flickr.auth.getFrob
+      auth_url = FlickRaw.auth_url :frob => frob, :perms => "write"
 
       puts " "
       puts "opening your browser..."
