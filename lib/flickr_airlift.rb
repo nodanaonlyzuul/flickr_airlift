@@ -44,7 +44,6 @@ module FlickrAirlift
         flickr.photos.search(:user_id => user_id, :page => page_number).each_with_index do |photo, i|
 
           photo_id            = photo.id
-          info                = flickr.photos.getInfo(:photo_id => photo_id)
           downloadable_files  = flickr.photos.getSizes(:photo_id => photo_id)
 
           ranked_sizes.each do |size_name|
