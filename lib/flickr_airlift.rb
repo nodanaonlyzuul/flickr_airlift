@@ -26,9 +26,9 @@ module FlickrAirlift
         self.download
       end
 
-      photos        = flickr.photos.search(:user_id => user_id)
-      photo_count   = photos.total
-      page_count    = photos.pages
+      photos      = flickr.photos.search(:user_id => user_id)
+      photo_count = photos.total
+      page_count  = photos.pages
 
       # non-pro users don't have 'Original' sizes available.
       ranked_sizes  = ['Original', 'Large', 'Medium']
@@ -47,8 +47,8 @@ module FlickrAirlift
 
           ranked_sizes.each do |size_name|
             if df = downloadable_files.find { |downloadable_file| downloadable_file.label == size_name }
-              download_url        = df.source
-              file_to_write       = File.join(scraped_user, "#{photo_id}#{File.extname(download_url)}")
+              download_url  = df.source
+              file_to_write = File.join(scraped_user, "#{photo_id}#{File.extname(download_url)}")
 
               if File.exists?(file_to_write) && File.size(file_to_write) > 0
                 puts "** SKIPPING #{file_to_write} because it has already been downloaded"
