@@ -26,7 +26,6 @@ module FlickrAirlift
         self.download
       end
 
-
       photos        = flickr.photos.search(:user_id => user_id)
       photo_count   = photos.total
       page_count    = photos.pages
