@@ -12,7 +12,7 @@ h3. Requirements
 
 h1. Flickr Airlift
 
-Flickr Airlift is a command line tool to scrape *any set* _or_ *all photos in the photostream" of a user.
+Flickr Airlift is a command line tool to scrape *any set* _or_ *all photos in the photostream* of a user.
 It comes with the bin flickr_airlift.
 
 h2. Usage
