@@ -3,6 +3,7 @@ require 'flickraw'
 require 'net/http'
 require 'cgi'
 require 'launchy'
+require 'highline/import'
 require 'yaml'
 
 module FlickrAirlift
