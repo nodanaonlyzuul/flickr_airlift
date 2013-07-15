@@ -1,4 +1,5 @@
 require "flickr_airlift/version"
+require "flickr_airlift/downloader"
 require 'flickraw'
 require 'net/http'
 require 'cgi'
@@ -21,47 +22,34 @@ module FlickrAirlift
       scraped_user = scraped_user.strip
 
       begin
-        user_id = flickr.people.findByUsername(:username => scraped_user).id
+        user    = flickr.people.findByUsername(:username => scraped_user)
+        user_id = user.id
       rescue Exception => e
         puts "Hmmmm - unknown user - make sure to use the user's full handle - not the one in the URL. (example: 'Fast & Bulbous' not 'fastandbulbous')"
         self.download
       end
 
-      photos      = flickr.photos.search(:user_id => user_id)
-      photo_count = photos.total
-      page_count  = photos.pages
+      # Grab sets
+      photo_sets = flickr.photosets.getList(:user_id => user_id).sort_by(&:title)
 
-      # non-pro users don't have 'Original' sizes available.
-      ranked_sizes  = ['Original', 'Large', 'Medium']
+      choose do |menu|
+        menu.prompt = "What do you want to download?"
 
-      # Downloading
-      puts "#{scraped_user} has #{photo_count} pictures"
-      puts "* Creating folder named '#{scraped_user}'"
-      Dir.mkdir(scraped_user) unless File.directory?(scraped_user)
+        menu.choice("~ Entire Photostream ~") do
+          FlickrAirlift::Downloader.download(user)
+          exit
+        end
 
-      (1..page_count.to_i).each do |page_number|
-        puts "* PAGE #{page_number} of #{page_count}"
-        flickr.photos.search(:user_id => user_id, :page => page_number).each_with_index do |photo, i|
-
-          photo_id            = photo.id
-          downloadable_files  = flickr.photos.getSizes(:photo_id => photo_id)
-
-          ranked_sizes.each do |size_name|
-            if df = downloadable_files.find { |downloadable_file| downloadable_file.label == size_name }
-              download_url  = df.source
-              file_to_write = File.join(scraped_user, "#{photo_id}#{File.extname(download_url)}")
-
-              if File.exists?(file_to_write) && File.size(file_to_write) > 0
-                puts "** SKIPPING #{file_to_write} because it has already been downloaded"
-              else
-                puts "** Downloading #{i+1}: #{photo.title} (#{size_name}) from #{download_url}"
-                File.open(file_to_write, 'wb') { |file| file.puts Net::HTTP.get_response(URI.parse(download_url)).body }
-              end
-              break
-            end
+        photo_sets.each do |photoset|
+          menu.choice(photoset.title) do
+            FlickrAirlift::Downloader.download(user, photoset)
+            exit
           end
         end
+
+        menu.choice("Quit")             { exit }
       end
+
     rescue FlickRaw::FailedResponse => e
       puts e.msg
     end
