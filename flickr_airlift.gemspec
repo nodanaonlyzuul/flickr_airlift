@@ -8,6 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = FlickrAirlift::VERSION
   gem.authors       = ["nodanaonlyzuul"]
   gem.email         = ["beholdthepanda@gmail.com"]
+  gem.license       = 'MIT'
   gem.description   = "A Command-Line tool for scraping any user's original photos OR uploading all photos from a given directory"
   gem.summary       = "A Command-Line tool for scraping any user's original photos OR uploading all photos from a given directory"
   gem.homepage      = "https://github.com/nodanaonlyzuul/flickr_airlift"
@@ -22,4 +23,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency('highline', '1.6.11')
 
   gem.rubyforge_project = 'nowarning'
+
 end
