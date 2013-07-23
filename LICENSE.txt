@@ -1,4 +1,4 @@
-Copyright (c) 2013 Eastmedia
+Copyright (c) 2013 Stephen Schor
 
 MIT License
 
