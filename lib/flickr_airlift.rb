@@ -4,7 +4,6 @@ require 'flickr_authentication'
 require 'net/http'
 require 'cgi'
 require 'highline/import'
-require 'yaml'
 
 module FlickrAirlift
 
