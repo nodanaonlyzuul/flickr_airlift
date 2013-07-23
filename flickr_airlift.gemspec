@@ -18,9 +18,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency('launchy',  '0.4.0')
-  gem.add_dependency('flickraw', '0.8.4')
-  gem.add_dependency('highline', '1.6.11')
+  gem.add_dependency 'highline',              '1.6.11'
+  gem.add_dependency 'flickr_authentication', '0.0.1'
 
   gem.rubyforge_project = 'nowarning'
 

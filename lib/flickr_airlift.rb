@@ -1,9 +1,8 @@
 require "flickr_airlift/version"
 require "flickr_airlift/downloader"
-require 'flickraw'
+require 'flickr_authentication'
 require 'net/http'
 require 'cgi'
-require 'launchy'
 require 'highline/import'
 require 'yaml'
 
@@ -13,6 +12,7 @@ module FlickrAirlift
 
   def self.download
     begin
+
       establish_session
 
       # Prompt
@@ -76,44 +76,8 @@ module FlickrAirlift
   end
 
   def self.establish_session
-    auth_file               = File.join(Dir.home(), ".flick_airliftrc")
-    FlickRaw.api_key        = "3b2360cc04947af8cf59f51c47a6a8e4"
-    FlickRaw.shared_secret  = "405549bcec106815"
-
-    if File.exists?(auth_file)
-
-      data = YAML.load_file(auth_file)
-
-      begin
-        auth = flickr.auth.checkToken :auth_token => data["api_token"]
-      rescue Exception => e
-        puts "These was a problem with the credentials in #{auth_file}"
-        puts "Delete the file and try again."
-        exit
-      end
-
-    else
-      frob     = flickr.auth.getFrob
-      auth_url = FlickRaw.auth_url :frob => frob, :perms => "write"
-
-      puts " "
-      puts "opening your browser..."
-      sleep 1
-      puts "Come back and press Enter when you are finished"
-      sleep 2
-      Launchy.open(auth_url)
-
-      STDIN.getc
-
-      # Authentication
-      auth  = flickr.auth.getToken :frob => frob
-      login = flickr.test.login
-
-      puts "Writing credentials to #{auth_file}"
-      data = {}
-      data["api_token"] = auth.token
-      File.open(auth_file, "w"){|f| YAML.dump(data, f) }
-    end
+    fa = FlickrAuthentication.new(key: '3b2360cc04947af8cf59f51c47a6a8e4', shared_secret: '405549bcec106815', auth_file: File.join(Dir.home, ".flick_airliftrc"))
+    fa.authenticate
   end
 
 end
