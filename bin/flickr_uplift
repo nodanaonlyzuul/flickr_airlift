@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-require 'flickr_airlift'
-
-raise "Pass path to the directory you want to upload" if ARGV.empty?
-FlickrAirlift.upload(ARGV.first)

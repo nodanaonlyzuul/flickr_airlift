@@ -9,8 +9,8 @@ Gem::Specification.new do |gem|
   gem.authors       = ["nodanaonlyzuul"]
   gem.email         = ["beholdthepanda@gmail.com"]
   gem.license       = 'MIT'
-  gem.description   = "A Command-Line tool for scraping any user's original photos OR uploading all photos from a given directory"
-  gem.summary       = "A Command-Line tool for scraping any user's original photos OR uploading all photos from a given directory"
+  gem.description   = "A Command-Line tool for scraping any user's original photos."
+  gem.summary       = "A Command-Line tool for scraping any user's original photos."
   gem.homepage      = "https://github.com/nodanaonlyzuul/flickr_airlift"
 
   gem.files         = `git ls-files`.split($/)

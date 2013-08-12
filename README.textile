@@ -19,19 +19,17 @@ h2. Usage
 
 Here's an "example session":https://gist.github.com/0cd071320f022c06dc23
 
-------------------------------------------------------------------------------------
-
-h1. Flickr Uplift
-
-Flickr Uplift is a command line tool to bulk upload all photos in a given directory.
-By default they will all be public.
-
-h2. Usage
-
-Here's an "example session":https://gist.github.com/61c9b299fdbae112dc26
-
-This product uses the Flickr API but is not endorsed or certified by Flickr.
-
 h1. Stored Authentication.
 
 Once flickr_airlift authenticates you - it stores your authentication in ~/.flick_airliftrc
+
+------------------------------------------------------------------------------------
+
+The @flickr_uplift@ gem was removed from this gem.
+It used to upload files from an arbitrary directory.
+Muddling together these two features in one gem was a weird idea to begin with.
+One day I'll create a separate flickr_uplift gem.
+The last version with this functionality is "0.4.3":https://github.com/nodanaonlyzuul/flickr_airlift/tree/0.4.3
+Here's an "example session":https://gist.github.com/61c9b299fdbae112dc26
+
+_This product uses the Flickr API but is not endorsed or certified by Flickr._

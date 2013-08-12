@@ -7,8 +7,6 @@ require 'highline/import'
 
 module FlickrAirlift
 
-  UPLOADABLE_FORMATS = [".jpg", ".jpeg", ".gif", ".png", ".mov", ".avi"]
-
   def self.download
     begin
 
@@ -46,32 +44,12 @@ module FlickrAirlift
           end
         end
 
-        menu.choice("Quit")             { exit }
+        menu.choice("Quit") { exit }
       end
 
     rescue FlickRaw::FailedResponse => e
       puts e.msg
     end
-  end
-
-  def self.upload(relative_url = ".")
-    establish_session
-
-    image_file_names = Dir.entries(relative_url).find_all{ |file_name|  UPLOADABLE_FORMATS.any?{ |extension| file_name.downcase.include?(extension)} }
-    uploaded_ids = []
-
-    puts "Uploading #{image_file_names.length} files:"
-    sleep 1
-
-    image_file_names.each_with_index do |file_name, index|
-      puts "  Uploading (#{index+1} of #{image_file_names.length}): #{file_name}"
-      uploaded_ids << flickr.upload_photo(File.join(relative_url, file_name), :title => file_name.split(".").first)
-    end
-
-    puts "...DONE!"
-    edit_url = "http://www.flickr.com/photos/upload/edit/?ids=#{uploaded_ids.join(',')}"
-
-    Launchy.open(edit_url)
   end
 
   def self.establish_session
