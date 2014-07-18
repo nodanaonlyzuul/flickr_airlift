@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency 'highline',              '1.6.11'
-  gem.add_dependency 'flickr_authentication', '0.0.2'
+  gem.add_dependency 'flickr_authentication', '0.0.3'
 
   gem.rubyforge_project = 'nowarning'
 
