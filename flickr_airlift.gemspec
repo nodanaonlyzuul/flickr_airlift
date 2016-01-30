@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'highline',              '1.6.11'
   gem.add_dependency 'flickr_authentication', '0.0.3'
+  gem.add_dependency 'http', '>= 1.0.2'
 
   gem.rubyforge_project = 'nowarning'
 

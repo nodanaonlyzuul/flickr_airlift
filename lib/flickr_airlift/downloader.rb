@@ -1,4 +1,5 @@
 require 'fileutils'
+require "http"
 
 module FlickrAirlift
   module Downloader
@@ -37,7 +38,7 @@ module FlickrAirlift
                 puts "** SKIPPING #{file_to_write} because it has already been downloaded"
               else
                 puts "** Downloading #{i+1}: #{photo.title} (#{size_name}) from #{download_url}"
-                File.open(file_to_write, 'wb') { |file| file.puts Net::HTTP.get_response(URI.parse(download_url)).body }
+                file = File.open(file_to_write, 'wb') { |file| file.puts HTTP.get(download_url).to_s }
               end
               break
             end
